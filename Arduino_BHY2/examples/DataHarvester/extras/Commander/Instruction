@@ -23,6 +23,7 @@ Connect your Arduino Nicla Sense ME board to your computer via USB.
 Identify the correct COM port for your Arduino in the Windows Device Manager under "Ports (COM & LPT)".
 3. Run the Script
 Execute the Commander.py script with the required arguments. Replace COM_PORT, MyDevice, and Session1 with your specific port, device name, and session tag.
+example: python Commander.py COM14 "Nicla" "Test"
 
 bash
 Copy code
