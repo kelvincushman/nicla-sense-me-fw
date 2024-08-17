@@ -1,0 +1,50 @@
+Commander.py - Arduino Nicla Sense ME Data Harvester
+Overview
+Commander.py is a Python script designed to interface with the Arduino Nicla Sense ME. It facilitates the collection of sensor data over a serial connection, storing the received data in a CSV file. This script is a companion to the DataHarvester sketch on the Arduino.
+
+Requirements
+Before running the script, ensure the following dependencies are installed:
+
+Python 3.x (Ensure Python is added to your system's PATH)
+Required Python libraries:
+bash
+Copy code
+pip install pyreadline3 pyserial cobs
+Setup Instructions
+1. Clone the Repository
+Clone the Arduino Nicla Sense ME firmware repository or download the Commander.py script directly:
+
+bash
+Copy code
+git clone https://github.com/arduino/nicla-sense-me-fw.git
+cd nicla-sense-me-fw/Arduino_BHY2/examples/DataHarvester/extras/Commander
+2. Connect Your Arduino Board
+Connect your Arduino Nicla Sense ME board to your computer via USB.
+Identify the correct COM port for your Arduino in the Windows Device Manager under "Ports (COM & LPT)".
+3. Run the Script
+Execute the Commander.py script with the required arguments. Replace COM_PORT, MyDevice, and Session1 with your specific port, device name, and session tag.
+
+bash
+Copy code
+python Commander.py COM_PORT "MyDevice" "Session1"
+4. Interact with the Script
+Once the script is running, use the following commands to control the data acquisition:
+
+R - Start data acquisition and save data to a CSV file.
+S - Stop data acquisition.
+C - Close the serial connection.
+O - Open the serial connection (if it was closed).
+Q - Quit the program.
+5. CSV Output
+The script saves the collected data in a CSV file in the same directory. The filename is based on the provided arguments and the current timestamp.
+
+Troubleshooting
+Common Issues and Solutions
+COBS Decode Errors
+Error: COBS Decode Error: not enough input bytes for length code
+Solution: This error often occurs when the data received is not correctly formatted for COBS decoding. Ensure that only the final \x00 delimiter is removed from the data before decoding. The script has been adjusted to handle this by removing the last byte and then attempting to decode the data.
+Indentation Errors
+Error: IndentationError: expected an indented block
+Solution: Ensure that the code is consistently indented using 4 spaces per level. Avoid mixing tabs and spaces in your Python scripts.
+Final Solution
+The script was adjusted to correctly handle incoming data from the Arduino. After troubleshooting, the final implementation removes the last byte (COBS delimiter) and decodes the remaining data, which is then unpacked and written to a CSV file.
