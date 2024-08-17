@@ -111,3 +111,56 @@ Then, Nicla will reset and the firmware will be updated.
     * Replace `TARGET` with `nicla` or `bhi`
     * Replace `BIN_FILE` with the path of the binary file to be uploaded
 - Nicla will reset and the firmware will be updated
+
+Commander.py - Data Harvester for Arduino Nicla Sense ME
+This script is a companion application for the DataHarvester sketch on the Arduino Nicla Sense ME. It controls data acquisition operations, connects to the Arduino board via serial communication, and saves the received data to a CSV file.
+
+Requirements
+Ensure you have the following installed on your system:
+
+Python 3.x (Make sure Python is added to your system's PATH)
+Required Python libraries:
+bash
+Copy code
+pip install pyreadline3 pyserial cobs
+Setup
+1. Clone the Repository
+Clone the Arduino Nicla Sense ME firmware repository or download the Commander.py script directly.
+
+bash
+Copy code
+git clone https://github.com/arduino/nicla-sense-me-fw.git
+cd nicla-sense-me-fw/Arduino_BHY2/examples/DataHarvester/extras/Commander
+2. Connect Your Arduino Board
+Connect your Arduino Nicla Sense ME board to your computer via USB.
+Identify the correct COM port for your Arduino in the Windows Device Manager under "Ports (COM & LPT)".
+3. Run the Script
+Execute the Commander.py script with the required arguments. Replace COM_PORT, MyDevice, and Session1 with your specific port, device name, and session tag.
+
+bash
+Copy code
+python Commander.py COM_PORT "MyDevice" "Session1"
+4. Interact with the Script
+Once the script is running, use the following commands to control the data acquisition:
+
+R - Start data acquisition and save data to a CSV file.
+S - Stop data acquisition.
+C - Close the serial connection.
+O - Open the serial connection (if it was closed).
+Q - Quit the program.
+5. CSV Output
+The script saves the collected data in a CSV file in the same directory. The filename is based on the provided arguments and the current timestamp.
+
+Troubleshooting
+Raw Data Length Issues
+During testing, it was observed that each data packet received from the Arduino was 18 bytes long instead of the expected 16 bytes. The last 2 bytes (b'E\x00') were identified as markers or padding.
+
+The script was adjusted to remove these last 2 bytes before decoding the data packet.
+
+Debugging
+If you encounter issues, you can add print statements to inspect the raw data and adjust the script accordingly. Here’s an example:
+
+python
+Copy code
+print(f"Raw data received (length {n}): {data.hex()}")
+This will output the raw data in hexadecimal format, helping you understand its structure.
